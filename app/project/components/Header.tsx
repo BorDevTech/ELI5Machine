@@ -59,7 +59,9 @@ export function ProjectHeader({
           <HStack justify={"space-between"}>
             <Tag.Root rounded={"full"}>
               <Status.Root>
-                <Status.Indicator colorPalette={"green"} />
+                <Status.Indicator
+                  colorPalette={status === "online" ? "green" : "red"}
+                />
                 <Icon
                   as={Activity}
                   color={status === "online" ? "green" : "red"}
