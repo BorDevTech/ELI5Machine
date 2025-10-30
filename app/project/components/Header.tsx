@@ -16,13 +16,12 @@ import { useState } from "react";
 export function ProjectHeader({
   title,
   slogan,
+  status,
 }: {
   title: string;
   slogan: string;
+  status: "online" | "offline";
 }) {
-  const [statusCheck, setStatusCheck] = useState<"online" | "offline">(
-    "online"
-  ); // Placeholder for actual status check logic
   return (
     <HStack
       as={"header"}
@@ -61,8 +60,11 @@ export function ProjectHeader({
             <Tag.Root rounded={"full"}>
               <Status.Root>
                 <Status.Indicator colorPalette={"green"} />
-                <Icon as={Activity} color={"green"} />
-                Status {statusCheck === "online" ? "Online" : "Offline"}
+                <Icon
+                  as={Activity}
+                  color={status === "online" ? "green" : "red"}
+                />
+                Status {status === "online" ? "Online" : "Offline"}
               </Status.Root>
             </Tag.Root>
           </HStack>

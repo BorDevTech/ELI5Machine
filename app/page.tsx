@@ -18,7 +18,6 @@ import {
   Container,
 } from "@chakra-ui/react";
 
-import { Search, Shield } from "lucide-react";
 import { ProjectHeader } from "./project/components/Header";
 import { LuSearch } from "react-icons/lu";
 
@@ -27,6 +26,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<YouTubeSearchListResponse | null>(null);
+  const [status, setStatus] = useState<"online" | "offline">("offline");
 
   const handleSearch = async () => {
     try {
@@ -38,6 +38,7 @@ export default function Home() {
         `./api/search?q=${encodeURIComponent(query + " - eli5 easy")}`
       );
       if (!result.ok) throw new Error(`HTTP error ${result.status}`);
+      setStatus(result.ok ? "online" : "offline");
       const data = await result.json();
       setResult(data);
       //     const results: YouTubeSearchListResponse[] = await searchYouTube(searchTerm, 25, "video");
@@ -66,6 +67,7 @@ export default function Home() {
         <ProjectHeader
           title={"ELI5 Machine"}
           slogan={"Simple Search. Detailed Results. Instant Answers."}
+          status={status}
         />
         <HStack>
           <Card.Root
