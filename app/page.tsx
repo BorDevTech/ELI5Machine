@@ -26,7 +26,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<YouTubeSearchListResponse | null>(null);
-  const [status, setStatus] = useState<"online" | "offline">("offline");
+  const [status, setStatus] = useState<"online" | "offline">("online");
 
   const handleSearch = async () => {
     try {
