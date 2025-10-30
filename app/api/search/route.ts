@@ -12,9 +12,6 @@ export async function GET(request: NextRequest) {
 
   console.log("Received query:", query);
 
-  // Here you would typically call your search function
-  // const results = await searchYouTube(query);
-  // return NextResponse.json(results);
   try {
     const response = await fetch(url);
     const data = await response.json();

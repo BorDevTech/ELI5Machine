@@ -7,15 +7,12 @@ import {
   Input,
   Image,
   HStack,
-  Badge,
-  Button,
-  Box,
   SimpleGrid,
   Center,
-  Group,
   IconButton,
   InputGroup,
   Container,
+  Text,
 } from "@chakra-ui/react";
 
 import { ProjectHeader } from "./project/components/Header";
@@ -27,12 +24,15 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<YouTubeSearchListResponse | null>(null);
   const [status, setStatus] = useState<"online" | "offline">("online");
+  const [waiting, setWaiting] = useState<boolean>(true);
 
   const handleSearch = async () => {
     try {
       setLoading(true);
+      setWaiting(false);
       const query = !searchTerm
-        ? "What is quantum computing"
+        ? (setSearchTerm("What is quantum computing"),
+          "What is quantum computing")
         : (searchTerm as string);
       const result = await fetch(
         `./api/search?q=${encodeURIComponent(query + " - eli5 easy")}`
@@ -101,9 +101,14 @@ export default function Home() {
           <Card.Root borderTopRadius={0} p={0} m={0} borderTop={0}>
             <Center>
               <Card.Title>
-                {searchTerm == ""
-                  ? ""
-                  : `${result?.pageInfo?.totalResults} Search Results for "${searchTerm}"`}
+                {waiting === true && searchTerm === "" ? (
+                  <Text pt={"50%"}> Waiting for user input...</Text>
+                ) : (
+                  <Text pt={"10%"}>
+                    {result?.pageInfo?.totalResults} Search Results for{" "}
+                    {searchTerm}
+                  </Text>
+                )}
               </Card.Title>
             </Center>
 
