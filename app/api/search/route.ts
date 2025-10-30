@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     query
   )}&key=${token}`;
 
-  console.log("Received query:", query);
+  // console.log("Received query:", query);
 
   try {
     const response = await fetch(url);
