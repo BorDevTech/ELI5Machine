@@ -12,7 +12,6 @@ import {
 
 import { Activity } from "lucide-react";
 import { useState } from "react";
-import as from "../../../.next/dev/server/chunks/ssr/node_modules_adbb902d._";
 
 export function ProjectHeader({
   title,
