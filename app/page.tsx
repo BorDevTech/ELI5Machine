@@ -24,8 +24,11 @@ export default function Home() {
   const handleSearch = async () => {
     try {
       setLoading(true);
+      const query = !searchTerm
+        ? "What is quantum computing"
+        : (searchTerm as string);
       const result = await fetch(
-        `./api/search?q=${encodeURIComponent(searchTerm as string)} - eli5 easy`
+        `./api/search?q=${encodeURIComponent(query + " - eli5 easy")}`
       );
       if (!result.ok) throw new Error(`HTTP error ${result.status}`);
       const data = await result.json();
@@ -82,7 +85,7 @@ export default function Home() {
           <button onClick={handleSearch}>Search</button>
         </div>
         <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <h1>Results</h1>
+          <h1> {result?.pageInfo?.totalResults} Results</h1>
           <div>
             {loading && <p>Loading…</p>}
             {error && <p className="text-red-500">{error}</p>}
@@ -95,36 +98,35 @@ export default function Home() {
                   maxW="xl"
                 >
                   <Image
+                    p={0}
                     objectFit={"contain"}
                     src={video.snippet.thumbnails.high.url}
                     alt={video.snippet.title}
-                    maxW="300px"
+                    maxW="150px"
                     // width={video.snippet.thumbnails.high.width}
                     // height={video.snippet.thumbnails.high.height}
                   />
-                  <Box>
-                    <Card.Body>
-                      <Card.Title mb="2">
-                        <a
-                          href={`https://www.youtube.com/watch?v=${video.id.videoId}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {video.snippet.title}
-                        </a>
-                      </Card.Title>
-                      <Card.Description>
-                        {video.snippet.description}
-                      </Card.Description>
-                      {/* <HStack mt="4">
+                  <Card.Body>
+                    <Card.Title mb="2">
+                      <a
+                        href={`https://www.youtube.com/watch?v=${video.id.videoId}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {video.snippet.title}
+                      </a>
+                    </Card.Title>
+                    <Card.Description>
+                      {video.snippet.description}
+                    </Card.Description>
+                    {/* <HStack mt="4">
                         <Badge>Hot</Badge>
                         <Badge>Caffeine</Badge>
                       </HStack> */}
-                    </Card.Body>
-                    {/* <Card.Footer>
+                  </Card.Body>
+                  {/* <Card.Footer>
                       <Button>Buy Latte</Button>
                     </Card.Footer> */}
-                  </Box>
                 </Card.Root>
               ))}
           </div>

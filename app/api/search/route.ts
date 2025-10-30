@@ -6,8 +6,10 @@ export async function GET(request: NextRequest) {
   if (!query) {
     return NextResponse.json({ error: "Missing query" }, { status: 400 });
   }
-  const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=
-  ${encodeURIComponent(query)}&key=${token}`;
+  const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=${encodeURIComponent(
+    query
+  )}&key=${token}`;
+
   console.log("Received query:", query);
 
   // Here you would typically call your search function

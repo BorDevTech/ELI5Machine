@@ -73,12 +73,6 @@ export function ProjectHeader({
                   Status {statusCheck === "online" ? "Online" : "Offline"}
                 </Status.Root>
               </Tag.Root>
-              <Tag.Root rounded={"full"}>
-                <Status.Root size="lg">
-                  <Status.Indicator />
-                  Total Searches
-                </Status.Root>
-              </Tag.Root>
             </HStack>
           </HStack>
         </Container>
