@@ -28,9 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <head>
         <Script id="clarity-analytics" strategy="afterInteractive">
           {`(function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -39,6 +37,10 @@ export default function RootLayout({
     })(window, document, "clarity", "script", "ty6dinuj6p");`}
         </Script>
         <meta name="msvalidate.01" content="E4D7229DE479B098F96B5441BDA3686F" />
+      </head>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         <Provider>{children}</Provider>
       </body>
     </html>
