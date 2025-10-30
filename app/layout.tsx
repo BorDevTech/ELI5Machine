@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { Provider } from "../components/ui/provider";
 import Footer from "./project/components/footer";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,10 +31,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Provider>
-          {children}
-          <Footer />
-        </Provider>
+        <Script id="clarity-analytics" strategy="afterInteractive">
+          {`(function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "ty6dinuj6p");`}
+        </Script>
+        <meta name="msvalidate.01" content="E4D7229DE479B098F96B5441BDA3686F" />
+        <Provider>{children}</Provider>
       </body>
     </html>
   );

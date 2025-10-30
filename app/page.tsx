@@ -10,10 +10,17 @@ import {
   Badge,
   Button,
   Box,
+  SimpleGrid,
+  Center,
+  Group,
+  IconButton,
+  InputGroup,
+  Container,
 } from "@chakra-ui/react";
 
 import { Search, Shield } from "lucide-react";
 import { ProjectHeader } from "./project/components/Header";
+import { LuSearch } from "react-icons/lu";
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -54,84 +61,108 @@ export default function Home() {
     }
   };
   return (
-    <Stack>
-      <ProjectHeader
-        title={"ClearView - VetID"}
-        icon={Shield}
-        slogan={"One Portal. Every Vet. Instant Results."}
-      />
-      <main>
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="text-5xl font-extrabold leading-tight tracking-tighter sm:text-6xl">
-            To get started, <br /> enter your subject into the search bar below.
-          </h1>
-          <Stack>
-            <Card.Root>
-              <Card.Title mt="2">Search Terms</Card.Title>
+    <Container minW={"100%"}>
+      <SimpleGrid>
+        <ProjectHeader
+          title={"ELI5 Machine"}
+          slogan={"Simple Search. Detailed Results. Instant Answers."}
+        />
+        <HStack>
+          <Card.Root
+            borderTopRadius={0}
+            borderBottomRadius={0}
+            minW={"100%"}
+            zIndex={1}
+          >
+            <Center>
+              <Card.Title p={2}>
+                To get started, enter your subject into the search bar below.
+              </Card.Title>
+            </Center>
+            <InputGroup
+              endElement={
+                <IconButton
+                  position={"relative"}
+                  right={-3}
+                  aria-label="Search database"
+                  bg="bg.subtle"
+                  variant="outline"
+                  onClick={handleSearch}
+                >
+                  <LuSearch />
+                </IconButton>
+              }
+            >
               <Input
-                borderRadius={"5px"}
-                border={"2px solid white"}
-                w={"300px"}
-                p={10}
+                borderRadius={0}
+                minW={"100%"}
+                flex="1"
                 type="text"
                 placeholder="ex: What is quantum computing"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-            </Card.Root>
-          </Stack>
+            </InputGroup>
+          </Card.Root>
+        </HStack>
+        <Stack>
+          <Card.Root borderTopRadius={0} p={0} m={0} borderTop={0}>
+            <Center>
+              <Card.Title>
+                {result?.pageInfo?.totalResults} Search Results
+              </Card.Title>
+            </Center>
 
-          {/* search term must be seperated by + if there are multiple words */}
-          <button onClick={handleSearch}>Search</button>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <h1> {result?.pageInfo?.totalResults} Results</h1>
-          <div>
-            {loading && <p>Loading…</p>}
-            {error && <p className="text-red-500">{error}</p>}
-            {result &&
-              result?.items?.map((video: any) => (
-                <Card.Root
-                  key={video.id.videoId}
-                  flexDirection="row"
-                  overflow="hidden"
-                  maxW="xl"
-                >
-                  <Image
-                    p={0}
-                    objectFit={"contain"}
-                    src={video.snippet.thumbnails.high.url}
-                    alt={video.snippet.title}
-                    maxW="150px"
-                    // width={video.snippet.thumbnails.high.width}
-                    // height={video.snippet.thumbnails.high.height}
-                  />
-                  <Card.Body>
-                    <Card.Title mb="2">
-                      <a
-                        href={`https://www.youtube.com/watch?v=${video.id.videoId}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {video.snippet.title}
-                      </a>
-                    </Card.Title>
-                    <Card.Description>
-                      {video.snippet.description}
-                    </Card.Description>
-                    {/* <HStack mt="4">
-                        <Badge>Hot</Badge>
-                        <Badge>Caffeine</Badge>
-                      </HStack> */}
-                  </Card.Body>
-                  {/* <Card.Footer>
-                      <Button>Buy Latte</Button>
-                    </Card.Footer> */}
-                </Card.Root>
-              ))}
-          </div>
-        </div>
-      </main>
-    </Stack>
+            <Card.Body p={0} m={0}>
+              {loading && <p>Loading…</p>}
+              <SimpleGrid
+                columns={[1, null, 2, 3, 4]}
+                gap={"20px"}
+                py={10}
+                px={{ base: 7, md: 14, lg: 28 }}
+              >
+                {error && <p className="text-red-500">{error}</p>}
+                {result &&
+                  result?.items?.map((video: any) => (
+                    <Card.Root
+                      key={video.id.videoId}
+                      flexDirection="column"
+                      overflow={"hidden"}
+                      maxW={300}
+                      minW={300}
+                      maxH={500}
+                    >
+                      <Center>
+                        <Image
+                          objectFit={"contain"}
+                          src={video.snippet.thumbnails.high.url}
+                          alt={video.snippet.title}
+                          maxW="300px"
+                          // width={video.snippet.thumbnails.high.width}
+                          // height={video.snippet.thumbnails.high.height}
+                        />
+                      </Center>
+                      <Card.Body>
+                        <Card.Title mb="2" as="h4">
+                          <a
+                            href={`https://www.youtube.com/watch?v=${video.id.videoId}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {video.snippet.title}
+                          </a>
+                        </Card.Title>
+                        <Card.Description>
+                          {video.snippet.description}
+                        </Card.Description>
+                      </Card.Body>
+                    </Card.Root>
+                  ))}
+              </SimpleGrid>
+            </Card.Body>
+          </Card.Root>
+        </Stack>
+      </SimpleGrid>
+    </Container>
   );
 }
