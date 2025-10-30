@@ -41,16 +41,6 @@ export default function Home() {
       setStatus(result.ok ? "online" : "offline");
       const data = await result.json();
       setResult(data);
-      //     const results: YouTubeSearchListResponse[] = await searchYouTube(searchTerm, 25, "video");
-      //     setResult(results);
-      //     const uniqueStatuses = Array.from(
-      //       new Set(results.map((r) => r.status).filter((s): s is string => !!s))
-      //     );
-      //     setAvailableStatuses(uniqueStatuses);
-      //     setCurrentPage(1);
-      //     setError(
-      //       results.length === 0 ? "No valid license found or parse error" : null
-      //     );
     } catch (err: unknown) {
       let message = "Verification function not found for this state.";
       if (err instanceof Error) {
@@ -111,7 +101,9 @@ export default function Home() {
           <Card.Root borderTopRadius={0} p={0} m={0} borderTop={0}>
             <Center>
               <Card.Title>
-                {result?.pageInfo?.totalResults} Search Results
+                {searchTerm == ""
+                  ? ""
+                  : `${result?.pageInfo?.totalResults} Search Results for "${searchTerm}"`}
               </Card.Title>
             </Center>
 
