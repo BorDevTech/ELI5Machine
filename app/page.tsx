@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import type { YouTubeSearchListResponse } from "./types/search-result";
+import type { YouTubeSearchListResponse } from "./project/types/search-result";
 import {
   Stack,
   Card,
@@ -11,6 +11,9 @@ import {
   Button,
   Box,
 } from "@chakra-ui/react";
+
+import { Search, Shield } from "lucide-react";
+import { ProjectHeader } from "./project/components/Header";
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -48,29 +51,27 @@ export default function Home() {
     }
   };
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-        />
+    <Stack>
+      <ProjectHeader
+        title={"ClearView - VetID"}
+        icon={Shield}
+        slogan={"One Portal. Every Vet. Instant Results."}
+      />
+      <main>
         <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
           <h1 className="text-5xl font-extrabold leading-tight tracking-tighter sm:text-6xl">
             To get started, <br /> enter your subject into the search bar below.
           </h1>
           <Stack>
             <Card.Root>
-              <Card.Title mt="2">First Name</Card.Title>
+              <Card.Title mt="2">Search Terms</Card.Title>
               <Input
                 borderRadius={"5px"}
                 border={"2px solid white"}
                 w={"300px"}
                 p={10}
                 type="text"
-                placeholder="First Name"
+                placeholder="ex: What is quantum computing"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -129,6 +130,6 @@ export default function Home() {
           </div>
         </div>
       </main>
-    </div>
+    </Stack>
   );
 }
